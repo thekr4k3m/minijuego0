@@ -1,0 +1,36 @@
+#!/bin/bash
+
+# Este script es un minijuego de adivinanza de números
+
+echo "¡Bienvenido al juego de adivinanza de números!"
+echo "---------------------------------------"
+
+# Genera un número aleatorio entre 1 y 100
+numero_secreto=$((1 + RANDOM % 100))
+
+intentos=0
+adivinado=false
+
+while [ $adivinado = false ]
+do
+    echo "Adivina el número secreto (entre 1 y 100):"
+    read numero
+
+    # Verifica si el número ingresado es válido
+    if ! [[ $numero =~ ^[0-9]+$ ]]; then
+        echo "Ingresa un número válido."
+        continue
+    fi
+
+    let "intentos++"
+
+    # Verifica si el número ingresado es igual al número secreto
+    if [ $numero -eq $numero_secreto ]; then
+        adivinado=true
+        echo "¡Felicidades! Adivinaste el número secreto en $intentos intentos."
+    elif [ $numero -lt $numero_secreto ]; then
+        echo "El número secreto es mayor."
+    else
+        echo "El número secreto es menor."
+    fi
+done
